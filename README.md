@@ -66,8 +66,7 @@ const TodoForm = ({ addTodo }) => {
 
 export default TodoForm;
 ```
-<hr> 
-
+Asagidaki kod parcasinda value degiskeni dogrudan kullanilabilir. Ancak return kisminda geri dondurulen veri html oldugu icin javascript kodlari {} icerisinde yazilmalidir.
 ```javascript
 const handleSubmit = (e) => {
         e.preventDefault();
@@ -76,7 +75,7 @@ const handleSubmit = (e) => {
         setValue("");
     };
 ``` 
-Yukarida value degiskeni dogrudan kullanilabilir. Ancak return kisminda geri dondurulen veri html oldugu icin javascript kodlari {} icerisinde yazilmalidir. Bu sebeple asagidaki value atamasi {} icerisinde cagrilmistir.
+Bu sebeple asagidaki value atamasi {} icerisinde cagrilmistir.
 ```javascript
 return (
         <form onSubmit={handleSubmit}>
@@ -153,3 +152,75 @@ todos.map((todo, index) => (
 Bu sayede her bir todo icin todo ve delete button'i eklenir.
 ![Alt text](img_todo_button.png)
 
+<b> App.js </b>
+
+Sonrasinda App.js icerisinde kullanilacak componentler ve moduller import edilir.
+
+```javascript
+import React, { useState } from "react";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
+```
+
+App adinda bir const tanimlanir ve icerisinde todos degiskeni setTodos fonksiyonunu iceren bir durum degiskeni tanimlanir. todos mevcut yapilacaklar listesini temsil eder, setTodos ise todos state'ini guncellemek icin kullanilan bir fonksiyondur.
+
+Bu fonksiyon todos state'i guncellendiginde React uygulamasina bu degisikligi bildirir ve bilesenin yeniden render edilmesini saglar.
+
+addTodo ve deleteTodo fonksiyonlarinin burada tanimlanmasinin sebebi, bu fonksiyonlarin todos state'ini guncellemesi ve guncelleme isleminin App componentinin sorumlulugunda olmasidir.
+
+
+```javascript
+const App = () => {
+
+  const [todos, setTodos] = useState([]);
+
+  const addTodo = (text) => {
+    // ...todos , todos dizisinin tum elemanlarini yeni bir diziye yayar(spread).
+    // setTodos ile todos dizisinin tum elemanlarini yeni bir diziye kopyalar,
+    // sonra text degiskenini bu kopyalanan dizinin sonuna ekler.
+    setTodos([...todos, text]);
+  };
+
+  const deleteTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <TodoForm addTodo={addTodo} />
+      <TodoList todos={todos} deleteTodo={deleteTodo} />
+    </div>
+  );
+};
+
+export default App;
+```
+
+<b> index.js </b>
+
+index.js icerisinde App.js componentinde olusturulan const degeri cagirilir.
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+ReactDOM.render(
+  //  <React.StrictMode> geliştirme sırasında potansiyel sorunları tespit etmek icin kullanilir. Canliya alinirken kaldirilmalidir.
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+)
+```
+
+document.getElementById("root") olmasinin sebeni public/index.html dosyasinda root adinda bir container olmasidir.
+
+```html
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+```
