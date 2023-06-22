@@ -6,7 +6,7 @@ Bu bilesen, 'todos' ve 'deleteTodo' adinda iki tane prop kabul ediyor.
 todos, bir dizidir 
 deleteTodo, bir fonksiyondur
 */
-const TodoList = ({ todos, deleteTodo }) => {
+const TodoList = ({ todos, deleteTodo, completeTodo }) => {
     return (
         <ul>
             {// todos map ile todos dizisinde donguye girilir ve her bir todo
@@ -18,6 +18,7 @@ const TodoList = ({ todos, deleteTodo }) => {
                 <li key={index}>
                     {todo}
                     <button onClick={() => deleteTodo(index)}>Delete</button>
+                    <button onClick={() => completeTodo(index)}>Mark as Completed</button>
                 </li>
             ))}
         </ul>
