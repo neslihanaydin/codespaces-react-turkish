@@ -11,11 +11,14 @@ const TodoItem = ( {todo, deleteTodo, completeTodo }) => {
     }
     return (
         <li>
-        <span>{todo}</span>
-        <button onClick={handleComplete}>Mark as Completed</button>
-        <button onClick={handleDelete}>Delete</button>
+            <span className={todo.status === "completed" ? "completed" : ""}>
+                {todo.text}
+            </span>
+            {todo.status === "incomplete" && (
+                <button onClick={handleComplete}>Mark as Completed</button>
+            )}
+            <button onClick={handleDelete}>Delete</button>
         </li>
-        
     );
 };
 

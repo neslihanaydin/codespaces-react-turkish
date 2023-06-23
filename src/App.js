@@ -11,7 +11,8 @@ const App = () => {
   const [completedTodos, setCompletedTodos] = useState([]);
 
   const addTodo = (text) => {
-    setTodos([...todos, text]);
+    const newTodo = { text, status: "incomplete" };
+    setTodos([...todos, newTodo]);
   };
 
   const deleteTodo = (index) => {
@@ -20,8 +21,16 @@ const App = () => {
     setTodos(newTodos);
   };
 
+  const deleteCompletedTodo = (index) => {
+    const newComTodos = [...completedTodos];
+    newComTodos.splice(index, 1);
+    setCompletedTodos(newComTodos);
+  }
+
   const completeTodo = (index) => {
-    setCompletedTodos([...completedTodos, todos[index]]);
+    const updatedTodos = [...todos];
+    updatedTodos[index].status = "completed";
+    setCompletedTodos([...completedTodos, updatedTodos[index]]);
     deleteTodo(index);
   };
 
@@ -31,7 +40,7 @@ const App = () => {
       <TodoForm addTodo={addTodo} />
       <TodoList todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} />
       <h1>Completed Todo List</h1>
-      <CompletedTodoList completedTodos={completedTodos} /> 
+      <CompletedTodoList completedTodos={completedTodos} deleteTodo={deleteCompletedTodo} /> 
     </div>
   );
 };
