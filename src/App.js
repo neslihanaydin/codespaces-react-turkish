@@ -31,7 +31,7 @@ const App = () => {
       <TodoForm addTodo={addTodo} />
       <TodoList todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} />
       <h1>Completed Todo List</h1>
-      <CompletedTodoList completeTodos={completedTodos} /> 
+      <CompletedTodoList completedTodos={completedTodos} /> 
     </div>
   );
 };
