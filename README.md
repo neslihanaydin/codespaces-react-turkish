@@ -286,3 +286,69 @@ TodoList componentindeki li elementlerinin yerine TodoItem componenti yerlestiri
     </li>
 ```
 Ardindan App.js dosyasinda degisiklikler yapilmistir.
+
+<b> App.js </b>
+
+```javascript
+import React, { useState } from "react";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
+import CompletedTodoList from "./components/CompletedTodoList";
+
+
+const App = () => {
+
+  const [todos, setTodos] = useState([]);
+
+  const [completedTodos, setCompletedTodos] = useState([]);
+
+  const addTodo = (text) => {
+    const newTodo = { text, status: "incomplete" };
+    setTodos([...todos, newTodo]);
+  };
+
+  const deleteTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
+  const deleteCompletedTodo = (index) => {
+    const newComTodos = [...completedTodos];
+    newComTodos.splice(index, 1);
+    setCompletedTodos(newComTodos);
+  }
+
+  const completeTodo = (index) => {
+    const updatedTodos = [...todos];
+    updatedTodos[index].status = "completed";
+    setCompletedTodos([...completedTodos, updatedTodos[index]]);
+    deleteTodo(index);
+  };
+
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <TodoForm addTodo={addTodo} />
+      <TodoList todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} />
+      <h1>Completed Todo List</h1>
+      <TodoList todos={completedTodos} deleteTodo={deleteCompletedTodo} /> 
+    </div>
+  );
+};
+
+export default App;
+```
+
+completedTodos' lari kontrol etmek icin useState kullanilmistir. addTodo islevinin icerisinde newTodo tanimi yapilirken todo elementlerinin yeni bir ozellik olan status ozelligi de default olarak incomplete olarak tanimlanmistir.
+
+Yapilan guncellemeler ile deleteCompletedTodo ve completeTodo islevleri de eklenmistir.
+deleteCompletedTodo islevi deleteTodo ile ayni islemi yapmaktadir. Sadece islemler completedTodos listesi uzerinde yapilmaktadir.
+
+completeTodo islevi ile, ilgili todonun statusu completed olarak guncellenir, ve completedTodos dizisinin sonuna eklenir. Ardindan deleteTodo fonksiyonu cagirilarak todos dizisinden kaldirilir.
+
+return kisminda Completed Todo List basligi altinda yeni bir TodoList componenti gosterilir ve prop olarak completedTodos dizisi ve deleteCompletedTodo islevi gonderilir.
+
+
+
+
