@@ -27,7 +27,7 @@ Todo Application, olusturma asamalari.
 
 ## Components:
 Todo Application icin 2 adet component tanimlanmistir.
-TodoForm.js, TofoList.js
+TodoForm.js, TodoList.js
 
 <b> TodoForm.js </b>
 
