@@ -11,7 +11,7 @@ const TodoItem = ( {todo, deleteTodo, completeTodo }) => {
     }
     return (
         <li>
-            <span className={todo.status === "completed" ? "completed" : ""}>
+            <span>
                 {todo.text}
             </span>
             {todo.status === "incomplete" && (

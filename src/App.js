@@ -40,7 +40,7 @@ const App = () => {
       <TodoForm addTodo={addTodo} />
       <TodoList todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} />
       <h1>Completed Todo List</h1>
-      <CompletedTodoList completedTodos={completedTodos} deleteTodo={deleteCompletedTodo} /> 
+      <TodoList todos={completedTodos} deleteTodo={deleteCompletedTodo} /> 
     </div>
   );
 };
