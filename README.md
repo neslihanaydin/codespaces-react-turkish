@@ -1,11 +1,7 @@
-# ♥️ React
 
-# About REACT
 
 <img width="631" alt="image" src="https://github.com/neslihanaydin/codespaces-react-turkish/assets/26707748/add568f0-2fa6-4b53-bc00-050733e13088">
 
-
-Todo Application, olusturma asamalari.
 
 ## Components:
 Todo Application icin 2 adet component tanimlanmistir.
@@ -206,3 +202,87 @@ document.getElementById("root") olmasinin sebeni public/index.html dosyasinda ro
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 ```
+
+# Version 2 : Uygulama Yapisinda Guncellemeler, ve yeni ozellikler
+
+TodoItem componenti eklenerek todo itemlerinin yonetilmesi kolaylastirilabilir.
+
+<b> TodoItem.js </b>
+
+```javascript
+import React from "react";
+
+const TodoItem = ( {todo, deleteTodo, completeTodo }) => {
+    
+    const handleDelete = () => {
+        deleteTodo();
+      };
+    
+    const handleComplete = () => {
+        completeTodo();
+    }
+    return (
+        <li>
+            <span>
+                {todo.text}
+            </span>
+            {todo.status === "incomplete" && (
+                <button onClick={handleComplete}>Mark as Completed</button>
+            )}
+            <button onClick={handleDelete}>Delete</button>
+        </li>
+    );
+};
+
+export default TodoItem;
+```
+
+TodoItem componenti 3 adet props almaktadir. todo, item'in kendisini temsil eder. deleteTodo ve completeTodo fonksiyondur.
+
+Icerisinde tanimlanan handleDelete() islevi ile component icerisinde yer alan Delete butonunun onClick islemi prop ile yonetilir. Ayni sekilde handleComplete islevi ile de component icerisindeki Mark as Completed butonunun onClick event'i yonetilir. todo nesnesinin status'u incomplete ise Mark as Completed butonu gosterilir. Aksi takdirde bu todo nesnesi Completed Todo List yer altinda aliyor demektir ve Mark as Completed butonu saklanir.
+
+```javascript
+    // ..
+    {todo.status === "incomplete" && (
+        <button onClick={handleComplete}>Mark as Completed</button>
+    )}
+    <button onClick={handleDelete}>Delete</button>
+```
+
+TodoItem componenti eklendikten sonra TodoList componentinde de degisiklikler yapilmistir.
+
+<b> TodoList.js </b>
+
+```javascript
+import React from "react";
+import TodoItem from "./TodoItem";
+
+const TodoList = ({ todos, deleteTodo, completeTodo }) => {
+    return (
+        <ul>
+            {
+            todos.map((todo, index) => (
+            <TodoItem
+                key={index}
+                todo={todo}
+                deleteTodo={() => deleteTodo(index)}
+                completeTodo={() => completeTodo(index)}
+            />
+            ))}
+        </ul>
+    );
+};
+
+export default TodoList;
+```
+
+TodoList componentindeki li elementlerinin yerine TodoItem componenti yerlestirilmistir.
+
+```javascript
+    // Eski versiyon
+     <li key={index}>
+        {todo}
+        <button onClick={() => deleteTodo(index)}>Delete</button>
+    </li>
+```
+Ardindan App.js dosyasinda degisiklikler yapilmistir.
