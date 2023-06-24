@@ -2,6 +2,9 @@
 
 # About REACT
 
+<img width="631" alt="image" src="https://github.com/neslihanaydin/codespaces-react-turkish/assets/26707748/add568f0-2fa6-4b53-bc00-050733e13088">
+
+
 Todo Application, olusturma asamalari.
 
 ## Components:
